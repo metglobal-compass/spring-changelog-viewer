@@ -23,8 +23,8 @@ public class FileConverterUnitTest {
   public void success() {
     String expected = "## Test Changelog\n\n"
         + "### This is a title.\n\nThis is a paragraph.\n"
-        + "- This is 1st list item.\n- This is 2nd list item.";
-    String actual = FileConverter.convertToString("test_files/TEST.md");
+        + "- This is 1st list item.\n- This is 2nd list item.\n";
+    String actual = FileConverter.convertToString("TEST.md");
 
     assert actual.equals(expected);
   }
