@@ -9,8 +9,9 @@ It adds a controller for viewing change logs in browser by `/changelog` route.
 
 (e.g. if your project URL is `http://localhost:8080`, then you can access changelog page on `http://localhost:8080/changelog`)
 
-For default usage, CHANGELOG.md must exist at root of the project. If filename is different, 
-then you should specify `fileName` in URL query. (e.g. `/changelog?fileName=Different.md`)
+For default usage, CHANGELOG.md should be in default resource folder (`src/main/resources`)
+or you should include file as a resource like shown in below pom.xml code. If
+filename is different, then you should specify `fileName` in URL query. (e.g. `/changelog?fileName=Different.md`)
 
 ### Usage
 
@@ -30,6 +31,26 @@ pom.xml code (replace "latest version" with project version (e.g. 0.1.0)):
      </dependency>
      ..............
  </dependencies>
+  ...........
+ <build>
+    ...
+    <resources>
+        <resource>
+           <!-- NOTE: This is required if resource usage is needed !-->
+           <!-- because this is Spring Boot's default resource directory !-->
+           <directory>src/main/resources</directory>
+        </resource>
+        <resource>
+           <directory>${project.basedir}</directory>
+              <includes>
+                 <!-- This is example for file in root directory !-->
+                 <!-- If file is in any subfolder, you should change it like subdir/CHANGELOG.md !-->
+                 <include>CHANGELOG.md</include>
+              </includes>
+        </resource>
+    </resources>
+    ...
+ </build>
  ```
 
 After adding that, run `` mvn install`` to import dependency. And scan the package by 
