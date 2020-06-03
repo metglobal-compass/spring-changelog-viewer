@@ -2,10 +2,10 @@ package com.compass.changelog.util;
 
 import com.compass.changelog.exception.InvalidFileException;
 import java.io.IOException;
-import java.nio.file.Files;
+import java.nio.charset.Charset;
 import java.nio.file.InvalidPathException;
-import java.nio.file.Paths;
-import java.util.stream.Collectors;
+import org.apache.commons.io.IOUtils;
+import org.springframework.core.io.ClassPathResource;
 
 public class FileConverter {
 
@@ -16,7 +16,8 @@ public class FileConverter {
 
     String markdown;
     try {
-      markdown = Files.lines(Paths.get(fileName)).collect(Collectors.joining("\n"));
+      markdown = IOUtils
+          .toString(new ClassPathResource(fileName).getInputStream(), Charset.defaultCharset());
     } catch (IOException | InvalidPathException ex) {
       throw new InvalidFileException();
     }

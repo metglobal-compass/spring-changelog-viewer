@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Collectors;
 import org.junit.Test;
+import org.springframework.core.io.ClassPathResource;
 
 // TODO: Add integration test
 public class ServiceUnitTest {
@@ -13,8 +14,11 @@ public class ServiceUnitTest {
   public void success() throws Exception {
     ChangelogService service = new ChangelogService();
 
-    String expected = Files.lines(Paths.get("test_files/test.html")).collect(Collectors.joining("\n"));
-    String actual = service.handle("test_files/TEST.md");
+    String expected = Files
+        .lines(new ClassPathResource("test.html").getFile().toPath())
+        .collect(Collectors.joining("\n"));
+
+    String actual = service.handle("TEST.md");
 
     assert actual.equals(expected + "\n");
   }
